@@ -58,11 +58,12 @@ stages:
           ls -l
           cp -rvf *.txt $(target)
           
+       
     - task: PublishBuildArtifacts@1
-      displayName: PUBLISH ARTIFACTS
       inputs:
-        targetPath: '$(target)'
-        artifactName: '$(artifact)'
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
         
     
     - task: DownloadBuildArtifacts@1
