@@ -14,6 +14,8 @@ variables:
   imageRepository: 'praneshpoojarypipelinesjavascriptdocker'
   containerRegistry: 'praneshregistry1.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/app/Dockerfile'
+  target: $(build.artifactstagingdirectory)
+  artifact: AM
   tag: '$(Build.BuildId)'
 
   # Agent VM image name
@@ -60,10 +62,10 @@ stages:
           
        
     - task: PublishBuildArtifacts@1
+      displayName: PUBLISH ARTIFACTS
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'drop'
-        publishLocation: 'Container'
+        targetPath: '$(target)'
+        artifactName: '$(artifact)'
              
     - task: DownloadBuildArtifacts@1
       inputs:
