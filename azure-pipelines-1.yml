@@ -16,6 +16,8 @@ variables:
   dockerfilePath: '$(Build.SourcesDirectory)/app/Dockerfile'
   target: $(build.artifactstagingdirectory)
   artifact: AM
+  appName : 'Demowebapp11'
+  azureSubscription : 'ee896667-32f5-4db5-b1a0-23d8336dc862'
   tag: '$(Build.BuildId)'
 
   # Agent VM image name
@@ -73,3 +75,10 @@ stages:
             downloadType: 'specific'
             itemPattern: '**/*'
             downloadPath: '$(System.ArtifactsDirectory)'
+          
+    - task: AzureWebAppContainer@1      
+      displayName: 'Azure Web App on Container Deploy'      
+      inputs:        
+          azureSubscription: $(azureSubscription)        
+          appName: $(appName)        
+          containers: $(containerRegistry)/$(imageRepository):$(tag)
